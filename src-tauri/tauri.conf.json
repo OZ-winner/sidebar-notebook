@@ -1,0 +1,54 @@
+{
+  "$schema": "https://raw.githubusercontent.com/tauri-apps/tauri/dev/crates/tauri-config-schema/schema.json",
+  "productName": "侧边笔记",
+  "version": "0.1.0",
+  "identifier": "com.sidebar.notes",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+   "windows": [
+     {
+       "label": "trigger",
+       "title": "速记",
+       "width": 32,
+       "height": 32,
+       "decorations": false,
+       "transparent": true,
+       "alwaysOnTop": true,
+       "skipTaskbar": true,
+       "resizable": false,
+       "visible": true
+     },
+     {
+       "label": "panel",
+       "title": "笔记面板",
+       "width": 400,
+       "height": 32,
+       "decorations": false,
+       "transparent": false,
+       "alwaysOnTop": true,
+       "skipTaskbar": true,
+       "resizable": false,
+       "visible": false
+     }
+   ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

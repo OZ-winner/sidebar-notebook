@@ -1,0 +1,147 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body, #root { height: 100%; overflow: hidden; }
+
+body {
+  background: transparent;
+  color: #333;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.app-container { position: relative; width: 100%; height: 100vh; }
+
+ .sidebar-trigger {
+   width: 32px; height: 32px;
+   background: #f5e6c8;
+   
+   -webkit-
+   display: flex; align-items: center; justify-content: center;
+   cursor: pointer; user-select: none;
+   transition: background 0.15s;
+ }
+.sidebar-trigger:hover { background: #eddcb4; }
+.trigger-grip { color: #8b7355; transition: color 0.15s; }
+.sidebar-trigger:hover .trigger-grip { color: #5c4a2e; }
+
+.note-panel {
+  position: relative; width: 100%; height: 100vh;
+  background: #f8f9fa; display: flex; flex-direction: column;
+}
+
+.resize-handle {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 6px; cursor: ew-resize; z-index: 40;
+}
+.resize-handle:hover { background: rgba(0,0,0,0.1); }
+
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; border-bottom: 1px solid #e0e0e0; flex-shrink: 0;
+}
+.panel-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: #333; }
+.panel-header-actions { display: flex; align-items: center; gap: 4px; }
+.icon-btn {
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 8px; background: transparent; color: #8b7355; cursor: pointer;
+}
+.icon-btn:hover { background: #e8e8e8; color: #555; }
+.new-btn { color: #aaa; }
+.new-btn:hover { background: #e8f5e9; color: #4caf50; }
+
+ .panel-body {
+   flex: 1; display: flex; flex-direction: column; align-items: stretch; padding: 0; overflow-y: auto;
+ }
+ .new-note-placeholder { text-align: center; color: #aaa; }
+ .new-note-placeholder p { font-size: 15px; color: #999; margin-bottom: 6px; }
+ .new-note-placeholder .hint { font-size: 12px; color: #bbb; }
+ 
+ .note-list { padding: 8px 0; }
+ .note-item { display: flex; align-items: center; padding: 0; cursor: pointer; border-bottom: 1px solid #eee; transition: background 0.1s; }
+ .note-item:hover { background: #f0f0f0; }
+ .note-item-main { flex: 1; padding: 12px 8px 12px 16px; min-width: 0; }
+ .note-item-title { font-size: 14px; font-weight: 500; color: #333; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+ .note-item-time { font-size: 11px; color: #999; white-space: nowrap; }
+ 
+ .note-editor { flex: 1; display: flex; flex-direction: column; padding: 16px; gap: 8px; overflow: hidden; }
+ .note-title { font-size: 18px; font-weight: 700; color: #222; cursor: text; padding: 4px 0; line-height: 1.3; }
+ .note-title:hover { background: #f0f0f0; border-radius: 4px; padding: 4px 8px; margin: 0 -8px; }
+ .note-title-input { font-size: 18px; font-weight: 700; color: #222; border: none; outline: none; background: #f0f0f0; border-radius: 4px; padding: 4px 8px; width: 100%; font-family: inherit; }
+ .note-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; color: #999; flex-shrink: 0; flex-wrap: wrap; }
+ .note-content { flex: 1; width: 100%; border: none; outline: none; resize: none; font-size: 14px; line-height: 1.6; color: #333; background: transparent; font-family: inherit; padding: 0; }
+ .delete-btn { margin-left: auto; color: #ccc; }
+ .delete-btn:hover { background: #ffeaea; color: #e53935; }
+ .delete-btn-sm { flex-shrink: 0; width: 28px; height: 28px; margin-right: 8px; color: #ccc; opacity: 0; transition: opacity 0.15s; }
+ .note-item:hover .delete-btn-sm { opacity: 1; }
+ .delete-btn-sm:hover { background: #ffeaea; color: #e53935; }
+ .icon-btn.active { background: #e0e0e0; color: #555; }
+ 
+ /* 纭瀵硅瘽妗?*/
+ .confirm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; z-index: 999; }
+ .confirm-dialog { background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); min-width: 240px; }
+ .confirm-dialog p { font-size: 15px; color: #333; margin-bottom: 20px; text-align: center; }
+ .confirm-actions { display: flex; gap: 12px; justify-content: center; }
+ .confirm-cancel, .confirm-ok { padding: 8px 20px; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+ .confirm-cancel { background: #eee; color: #666; }
+ .confirm-ok { background: #e53935; color: #fff; }
+ .confirm-ok:hover { background: #c62828; }
+ .confirm-cancel:hover { background: #ddd; }
+ 
+ /* Markdown 棰勮 */
+ .markdown-preview { flex: 1; overflow-y: auto; font-size: 14px; line-height: 1.7; color: #333; padding: 0 4px; }
+ .markdown-preview h1, .markdown-preview h2, .markdown-preview h3 { margin: 16px 0 8px; font-weight: 600; }
+ .markdown-preview h1 { font-size: 20px; }
+ .markdown-preview h2 { font-size: 17px; }
+ .markdown-preview h3 { font-size: 15px; }
+ .markdown-preview p { margin: 8px 0; }
+ .markdown-preview ul, .markdown-preview ol { margin: 8px 0; padding-left: 20px; }
+ .markdown-preview code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+ .markdown-preview pre { background: #f5f5f5; padding: 12px; border-radius: 8px; overflow-x: auto; margin: 12px 0; }
+ .markdown-preview pre code { background: none; padding: 0; }
+ .markdown-preview blockquote { border-left: 3px solid #ddd; padding-left: 12px; color: #666; margin: 8px 0; }
+ .markdown-preview a { color: #1976d2; }
+ .markdown-preview img { max-width: 100%; border-radius: 4px; }
+
+
+/* Floating icon (fullscreen mode) */
+.floating-icon {
+  position: fixed;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex; align-items: center; justify-content: center;
+  cursor: grab; user-select: none;
+  transition: background 0.15s;
+  z-index: 99999;
+  color: #666;
+}
+.floating-icon:hover { background: rgba(255,255,255,0.5); color: #333; }
+.floating-icon.dragging { cursor: grabbing; background: rgba(255,255,255,0.6); }
+
+/* Floating icon right-click menu */
+.floating-menu-overlay {
+  position: fixed; inset: 0;
+  z-index: 999999;
+}
+.floating-menu {
+  position: fixed;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  padding: 6px 0;
+  min-width: 120px;
+  z-index: 9999999;
+}
+.floating-menu button {
+  display: block; width: 100%;
+  padding: 8px 20px; border: none;
+  background: transparent;
+  font-size: 13px; color: #333;
+  text-align: left; cursor: pointer;
+  font-family: inherit;
+}
+.floating-menu button:hover { background: rgba(0,0,0,0.06); }
+.floating-menu hr { border: none; border-top: 1px solid #e0e0e0; margin: 4px 0; }
