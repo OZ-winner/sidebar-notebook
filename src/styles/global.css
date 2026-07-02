@@ -145,3 +145,4 @@ body {
 }
 .floating-menu button:hover { background: rgba(0,0,0,0.06); }
 .floating-menu hr { border: none; border-top: 1px solid #e0e0e0; margin: 4px 0; }
+.sidebar-trigger.dragging { cursor: grabbing; }
